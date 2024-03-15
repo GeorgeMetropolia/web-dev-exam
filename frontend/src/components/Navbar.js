@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
-	const [isBgToggled, setIsBgToggled] = useState(false);
+const Navbar = ({ isAuthenticated, setIsAuthenticated, isBgToggled, setIsBgToggled }) => {
+	// const [isBgToggled, setIsBgToggled] = useState(false);
 
 	const handleClick = (e) => {
 		setIsAuthenticated(false);
@@ -15,7 +15,7 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
 	};
 
 	return (
-		<header style={{ backgroundColor: isBgToggled ? 'blue' : 'transparent' }}>
+		<header /* style={{ backgroundColor: isBgToggled ? 'blue' : 'transparent' }} */>
 			<div className="container">
 				{isAuthenticated && (
 					<Link to="/">

@@ -1,14 +1,36 @@
-import contactDetails from '../components/contactDetails';
-import contactForm from '../components/contactForm';
+import ContactDetails from '../components/contactDetails';
+import ContactForm from '../components/contactForm';
+import ContactUpdateForm from '../components/contactUpdateForm';
 import {useEffect, useState} from 'react';
 
-
 const Home = () => {
-	return (
-		<div className="home">
-			<div className="myservice">Home component</div>
-		</div>
-	);
+  const [contactArray, setContactArray] = useState([]);
+  const [update, setUpdate] = useState('no');
+  useEffect(() => {
+    const getContact = async () => {
+      const response = await fetch("/api/contact", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        console.log(data.error);
+        setContactArray([]);
+        return;
+      }
+      setContactArray(data);
+    };
+    getContact();
+  }, []);
+  return (
+    <div className="home">
+      <div className="myservice">
+        {contactArray.length === 0 && <h2>No Contacts Found</h2>}
+        {contactArray.map((contact) => (
+          <ContactDetails key={contact._id} contact={contact} />
+        ))}
+      </div >
+      <ContactForm />
+    </div>
+  );
 };
-
 export default Home;

@@ -13,13 +13,15 @@ function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(
 		Boolean(localStorage.getItem('token')) || false
 	);
+  const [isBgToggled, setIsBgToggled] = useState(false);
 	return (
-		<div className="App">
+		<div className="App" style={{ backgroundColor: isBgToggled ? 'blue' : 'transparent' }}>
 			<BrowserRouter>
-				<div className="flex-container">
 					<NavBar
 						isAuthenticated={isAuthenticated}
 						setIsAuthenticated={setIsAuthenticated}
+            isBgToggled={isBgToggled}
+            setIsBgToggled={setIsBgToggled}
 					/>
 					<Routes>
 						<Route
@@ -47,7 +49,6 @@ function App() {
 							}
 						/>
 					</Routes>
-				</div>
 			</BrowserRouter>
 		</div>
 	);
