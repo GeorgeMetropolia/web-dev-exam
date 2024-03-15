@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import ContactUpdateForm from './contactUpdateForm';
 
 
 const ContactDetails = ({ contact }) => {
 	const navigate = useNavigate();
+	const [isUpdating, setIsUpdating] = useState(false);
 
 	const contactDelete = async (id) => {
 		await fetch(`/api/contact/${id}`, {
@@ -11,12 +14,21 @@ const ContactDetails = ({ contact }) => {
 		});
 	};
 
-	const contactUpdate = async (id) => {
-		await fetch(`/api/contact/${id}`, {
-			method: 'PUT',
-			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+	const handleUpdate = async (updatedContact) => {
+		const response = await fetch(`/api/contact/${contact._id}`, {
+		  method: 'PUT',
+		  body: JSON.stringify(updatedContact),
+		  headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${localStorage.getItem('token')}`,
+		  },
 		});
-	};
+	
+		if (response.ok) {
+		  setIsUpdating(false); // Hide the form after updating
+		  navigate('/login');
+		}
+	  };
 
 	return (
 		<div className="myservice-details">
@@ -26,6 +38,10 @@ const ContactDetails = ({ contact }) => {
 			<p>{contact?.phone ?? 'no phone'}</p>
 			<p>{contact?.address ?? 'no address'}</p>
 
+			{isUpdating ? (
+				<ContactUpdateForm contact={contact} onUpdate={handleUpdate} />
+			) : (
+				<>
 			<span
 				className="myservice-delete"
 				onClick={() => {
@@ -38,13 +54,12 @@ const ContactDetails = ({ contact }) => {
 
 			<span
 				className="myservice-update"
-				onClick={() => {
-					contactUpdate(contact._id);
-					navigate('/login');
-				}}
+				onClick={() => setIsUpdating(true)}
 			>
 				update
 			</span>
+			</>
+			)}
 		</div>
 	);
 };

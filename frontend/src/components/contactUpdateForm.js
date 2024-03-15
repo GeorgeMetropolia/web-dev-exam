@@ -1,49 +1,54 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ContactUpdateForm = () => {
-	const navigate = useNavigate();
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [phone, setPhone] = useState('');
-	const [address, setAddress] = useState('');
-	const [error, setError] = useState(null);
-	const token = localStorage.getItem('token');
+const ContactUpdateForm = ({ contact, onUpdate }) => { // Corrected props
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState(contact.firstName);
+  const [lastName, setLastName] = useState(contact.lastName);
+  const [email, setEmail] = useState(contact.email);
+  const [phone, setPhone] = useState(contact.phone);
+  const [address, setAddress] = useState(contact.address);
+  const [error, setError] = useState(null);
+  const token = localStorage.getItem('token');
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-		if (!token) {
-			setError('You must be logged in');
-			return;
-		}
+    const updatedContact = { firstName, lastName, email, phone, address };
+    onUpdate(updatedContact);
 
-		const contact = { firstName, lastName, email, phone, address };
-		const response = await fetch('/api/contact', {
-			method: 'POST',
-			body: JSON.stringify(contact),
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-		});
+    if (!token) {
+      setError('You must be logged in');
+      return;
+    }
 
-		const json = await response.json();
+    const response = await fetch(`/api/contact/${contact._id}`, { // Corrected API endpoint
+      method: 'PUT', // Corrected HTTP method
+      body: JSON.stringify(updatedContact), // Use updatedContact instead of contact
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-		if (!response.ok) {
-			setError(json.error);
-		}
-		if (response.ok) {
-			setFirstName('');
-			setLastName('');
-			setEmail('');
-			setPhone('');
-			setAddress('');
-			setError(null);
-			navigate('/login');
-		}
-	};
+    const json = await response.json();
+
+    if (!response.ok) {
+      setError(json.error);
+    }
+    if (response.ok) {
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPhone('');
+      setAddress('');
+      setError(null);
+      navigate('/login');
+    }
+  };
+
+  // Rest of your code...
+
 	return (
 		<form className="create" onSubmit={handleSubmit}>
 			<h3>Add a New contact</h3>
@@ -77,6 +82,11 @@ const ContactUpdateForm = () => {
 			/>
 
 			<label>Address:</label>
+			<input
+				type="text"
+				onChange={(e) => setAddress(e.target.value)}
+				value={address}
+			/>
 
 			<button>Add Contact</button>
 			{error && <div className="error">{error}</div>}
