@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 export default function useLogin(url) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -16,6 +16,7 @@ export default function useLogin(url) {
     if (!response.ok) {
       setError(user.error);
       setIsLoading(false);
+      alert('Invalid username or password');
       return error;
     }
 
