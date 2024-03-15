@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+
 export default function useSignup(url) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+
   const signup = async (object) => {
     setIsLoading(true);
     setError(null);
     const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(object),
     });
     const user = await response.json();
@@ -20,8 +21,8 @@ export default function useSignup(url) {
       return error;
     }
 
-    localStorage.setItem('token', user.token);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem("token", user.token);
+    localStorage.setItem("user", JSON.stringify(user));
     setIsLoading(false);
   };
 

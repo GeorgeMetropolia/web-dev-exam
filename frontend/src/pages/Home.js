@@ -1,12 +1,14 @@
-import FitnessForm from '../components/FitnessForm';
+import contactDetails from '../components/contactDetails';
+import contactForm from '../components/contactForm';
+import {useEffect, useState} from 'react';
+
 
 const Home = () => {
-  return (
-    <div className="home">
-      <div className="fitness">Home component</div>
-      <FitnessForm />
-    </div>
-  );
+	return (
+		<div className="home">
+			<div className="myservice">Home component</div>
+		</div>
+	);
 };
 
 export default Home;
