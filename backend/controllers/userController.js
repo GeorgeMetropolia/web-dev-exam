@@ -15,14 +15,21 @@ const loginUser = async (req, res) => {
 		});
 	}
 
-	if (
-		email != User.findOne({ email }) ||
-		password != User.findOne({ password })
-	) {
+	const email_ = await User.findOne({ email });
+
+	if (!email_) {
 		return res.status(400).json({
 			error: 'Email or password is incorrect',
 		});
 	}
+
+	// const password_ = await User.findOne({ password });
+
+	// if (!password_) {
+	// 	return res.status(400).json({
+	// 		error: 'Email or password is incorrect',
+	// 	});
+	// }
 
 	try {
 		const user = await User.login(email, password);

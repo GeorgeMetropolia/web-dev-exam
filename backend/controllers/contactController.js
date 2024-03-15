@@ -4,9 +4,12 @@ const Contact = require('../models/contactModel');
 // get all Contact
 const getContacts = async (req, res) => {
 	const user_id = req.user._id;
+	const contacts = await Contact.find({ user_id }).sort({ createdAt: -1 });
+	if (!contacts) {
+		return res.status(404).json({ message: 'contact not found' });
+	}
 
 	try {
-		const contacts = await Contact.find({ user_id }).sort({ createdAt: -1 });
 		res.status(200).json(contacts);
 	} catch (error) {
 		console.error(error);
