@@ -5,7 +5,6 @@ import {useEffect, useState} from 'react';
 
 const Home = () => {
   const [contactArray, setContactArray] = useState([]);
-  const [update, setUpdate] = useState('no');
   useEffect(() => {
     const getContact = async () => {
       const response = await fetch("/api/contact", {
