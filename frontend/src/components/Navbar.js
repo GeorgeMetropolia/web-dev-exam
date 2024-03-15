@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 const Navbar = ({ isAuthenticated, setIsAuthenticated, isBgToggled, setIsBgToggled }) => {
-	// const [isBgToggled, setIsBgToggled] = useState(false);
 
+  // Function to handle logout
 	const handleClick = (e) => {
 		setIsAuthenticated(false);
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
 	};
 
+  // Function to toggle background color
 	const handleToggleBg = () => {
 		setIsBgToggled(!isBgToggled);
 	};
 
 	return (
-		<header /* style={{ backgroundColor: isBgToggled ? 'blue' : 'transparent' }} */>
+		<header>
 			<div className="container">
 				{isAuthenticated && (
 					<Link to="/">

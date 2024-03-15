@@ -124,8 +124,8 @@ nav a, nav button {
 }
 nav button {
   background: #fff;
-  color: var(--primary);
-  border: 2px solid var(--primary);
+  color: #000000;
+  border: 2px solid #71ebf0;
   padding: 6px 10px;
   border-radius: 4px;
   font-family: "Poppins";

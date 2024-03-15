@@ -11,6 +11,7 @@ const ContactForm = () => {
 	const [error, setError] = useState(null);
 	const token = localStorage.getItem('token');
 
+	// Function to handle the form submission for contact creation
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -44,6 +45,7 @@ const ContactForm = () => {
 			navigate('/login');
 		}
 	};
+	
 	return (
 		<form className="create" onSubmit={handleSubmit}>
 			<h3>Add a New contact</h3>

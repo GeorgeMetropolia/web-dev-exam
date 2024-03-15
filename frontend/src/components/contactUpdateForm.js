@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ContactUpdateForm = ({ contact, onUpdate }) => { // Corrected props
+const ContactUpdateForm = ({ contact, onUpdate }) => { 
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState(contact.firstName);
   const [lastName, setLastName] = useState(contact.lastName);
@@ -11,6 +11,8 @@ const ContactUpdateForm = ({ contact, onUpdate }) => { // Corrected props
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
 
+
+  //function to handle the form submission for update contact
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,9 +24,9 @@ const ContactUpdateForm = ({ contact, onUpdate }) => { // Corrected props
       return;
     }
 
-    const response = await fetch(`/api/contact/${contact._id}`, { // Corrected API endpoint
-      method: 'PUT', // Corrected HTTP method
-      body: JSON.stringify(updatedContact), // Use updatedContact instead of contact
+    const response = await fetch(`/api/contact/${contact._id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedContact),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -46,8 +48,6 @@ const ContactUpdateForm = ({ contact, onUpdate }) => { // Corrected props
       navigate('/login');
     }
   };
-
-  // Rest of your code...
 
 	return (
 		<form className="create" onSubmit={handleSubmit}>

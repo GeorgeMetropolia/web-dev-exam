@@ -6,22 +6,22 @@ import NavBar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-// import NoteFolders from './components/noteFolders';
-// import ContactForm from './components/ContactForm';
 
 function App() {
+  //useState to check if user is authenticated
 	const [isAuthenticated, setIsAuthenticated] = useState(
 		Boolean(localStorage.getItem('token')) || false
 	);
+  //useState to check if background is toggled in the navbar
   const [isBgToggled, setIsBgToggled] = useState(false);
 	return (
-		<div className="App" style={{ backgroundColor: isBgToggled ? 'blue' : 'transparent' }}>
+		<div className="App" style={{ backgroundColor: isBgToggled ? '#71ebf0' : 'transparent' }}>
 			<BrowserRouter>
 					<NavBar
 						isAuthenticated={isAuthenticated}
 						setIsAuthenticated={setIsAuthenticated}
-            isBgToggled={isBgToggled}
-            setIsBgToggled={setIsBgToggled}
+            			isBgToggled={isBgToggled}
+            			setIsBgToggled={setIsBgToggled}
 					/>
 					<Routes>
 						<Route

@@ -7,14 +7,13 @@ const Login = ({ setIsAuthenticated }) => {
 	const email = useField('email');
 	const password = useField('password');
 
-	const { login, isLoading, error } = useLogin('/api/users/login');
+	const { login, error } = useLogin('/api/users/login');
 
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		login({ email: email.value, password: password.value });
+		await login({ email: email.value, password: password.value });
 		if (!error) {
-			console.log('success');
-      setIsAuthenticated(true);
+      setIsAuthenticated(Boolean(localStorage.getItem('token')));
 			navigate('/');
 		}
 	};

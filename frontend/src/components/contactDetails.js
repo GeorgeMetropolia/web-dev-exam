@@ -7,6 +7,7 @@ const ContactDetails = ({ contact }) => {
 	const navigate = useNavigate();
 	const [isUpdating, setIsUpdating] = useState(false);
 
+	// delete contact on click
 	const contactDelete = async (id) => {
 		await fetch(`/api/contact/${id}`, {
 			method: 'DELETE',
@@ -14,6 +15,7 @@ const ContactDetails = ({ contact }) => {
 		});
 	};
 
+	// expands update form in contact details when update button is clicked
 	const handleUpdate = async (updatedContact) => {
 		const response = await fetch(`/api/contact/${contact._id}`, {
 		  method: 'PUT',
@@ -25,7 +27,7 @@ const ContactDetails = ({ contact }) => {
 		});
 	
 		if (response.ok) {
-		  setIsUpdating(false); // Hide the form after updating
+		  setIsUpdating(false);
 		  navigate('/login');
 		}
 	  };
