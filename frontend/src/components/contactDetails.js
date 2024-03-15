@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 const ContactDetails = ({ contact }) => {
 	const navigate = useNavigate();
-	// const [update, setUpdate] = useState('no');
 
 	const contactDelete = async (id) => {
 		await fetch(`/api/contact/${id}`, {
